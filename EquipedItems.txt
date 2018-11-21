@@ -1,0 +1,8 @@
+Head: Pointy Hat
+Face: Thick Glasses
+Neck: Heavy Gold Chain
+Chest: Itchy Shirt
+Greaves: Plastic Water Bottles
+Gloves: Fingerless Hobo Gloves
+Pants: Ripped Jeans
+Shoes: Non-Slip Work Shoes 
