@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.Timer;
+import autoquest.NarrativeDust;
+import java.util.Random;
 
 /**
  *
@@ -21,6 +23,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private DefaultListModel characterSheetModel = new DefaultListModel();
     private boolean intro = true;
     private Timer mainLoop = new Timer(100, this);
+    private DefaultListModel mobList = new DefaultListModel();
     
     /**
      * Creates new form MainWindow
@@ -56,12 +59,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         levelLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList4 = new javax.swing.JList<>();
+        mobListView = new javax.swing.JList<>();
         jProgressBar2 = new javax.swing.JProgressBar();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        johnCheckbox = new javax.swing.JCheckBox();
         jCheckBox4 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
 
@@ -97,17 +99,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Killing Queue");
 
-        jScrollPane5.setViewportView(jList4);
+        mobListView.setModel(mobList);
+        jScrollPane5.setViewportView(mobListView);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Gameplay Options");
-
-        jCheckBox1.setLabel("Anti-aliasing");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
 
         jCheckBox2.setLabel("DLC Content");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -116,10 +112,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jCheckBox3.setLabel("John O'Connor");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+        johnCheckbox.setSelected(true);
+        johnCheckbox.setLabel("John O'Connor");
+        johnCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
+                johnCheckboxActionPerformed(evt);
             }
         });
 
@@ -162,10 +159,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jCheckBox3)
+                                            .addComponent(johnCheckbox)
                                             .addComponent(jCheckBox4)
                                             .addComponent(jLabel7)
-                                            .addComponent(jCheckBox1)
                                             .addComponent(jCheckBox2)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,20 +207,17 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                 .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox3)
+                                .addComponent(johnCheckbox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -235,26 +228,89 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Main game loop
+        narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
+        
+        // Intro sequence
         if (intro) {
             if (narrativeProgressBar.getValue() <= 30) {
                 this.narrativeField.setText("You awake in a darkened forest in the middle of nowhere.");
+                return;
             } else if (narrativeProgressBar.getValue() <= 50) {
                 this.narrativeField.setText("You have nothing but the clothes on your back and your fists.");
+                return;
             } else if (narrativeProgressBar.getValue() <= 60) {
                 this.narrativeField.setText("You are cold.");
+                return;
             } else if (narrativeProgressBar.getValue() <= 70) {
                 this.narrativeField.setText("You are alone.");
+                return;
             } else if (narrativeProgressBar.getValue() <= 90) {
                 this.narrativeField.setText("With your remaining strength, you pick yourself up and venture into the forest");
+                return;
             } else if (narrativeProgressBar.getValue() < 100){
                 this.narrativeField.setText("This is your story.");
+                return;
             } else {
                 intro = false;
                 narrativeProgressBar.setValue(0);
+                mainLoop.setDelay(250);
                 setLevel(1);
+                return;
             }
-            narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
+        }
+        
+        // Main game loop
+        if (narrativeProgressBar.getValue() == 1) {
+            this.narrativeField.setText(NarrativeDust.motivationGenerator() + QuestList.fetchQuest());
+        } else if (narrativeProgressBar.getValue() == 10) {
+            this.narrativeField.setText("Monsters surround you as you begin your quest. You must fight to survive");
+            Random random = new Random();
+            for (int i = 0; i < 18; i++) {
+                if (johnCheckbox.isSelected()) {
+                    if (random.nextInt(5) == 0) {
+                        mobList.addElement("THE REAL John O'Connor");
+                    } else {
+                        mobList.addElement("John O'Connor");
+                    }
+                }
+            }
+        } else if (narrativeProgressBar.getValue() <= 20) {
+              
+        } else if (narrativeProgressBar.getValue() <= 25) {
+                
+        } else if (narrativeProgressBar.getValue() <= 30) {
+                
+        } else if (narrativeProgressBar.getValue() <= 35) {
+                
+        } else if (narrativeProgressBar.getValue() <= 40) {
+                
+        } else if (narrativeProgressBar.getValue() <= 45) {
+                
+        } else if (narrativeProgressBar.getValue() <= 50) {
+                
+        } else if (narrativeProgressBar.getValue() <= 55) {
+                
+        } else if (narrativeProgressBar.getValue() <= 60) {
+                
+        } else if (narrativeProgressBar.getValue() <= 65) {
+                
+        } else if (narrativeProgressBar.getValue() <= 70) {
+                
+        } else if (narrativeProgressBar.getValue() <= 75) {
+                
+        } else if (narrativeProgressBar.getValue() <= 80) {
+                
+        } else if (narrativeProgressBar.getValue() <= 85) {
+                
+        } else if (narrativeProgressBar.getValue() <= 90) {
+                
+        } else if (narrativeProgressBar.getValue() <= 95) {
+                
+        } else if (narrativeProgressBar.getValue() < 100){
+                
+        } else {
+            narrativeProgressBar.setValue(0);
+            setLevel(level + 1);
         }
     }
     
@@ -263,17 +319,13 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         this.levelLabel.setText("Level: " + String.valueOf(level));
     }
     
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+    private void johnCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_johnCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+    }//GEN-LAST:event_johnCheckboxActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -320,9 +372,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> characterSheetList;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -331,7 +381,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
-    private javax.swing.JList<String> jList4;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -339,7 +388,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JCheckBox johnCheckbox;
     private javax.swing.JLabel levelLabel;
+    private javax.swing.JList<String> mobListView;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextPane narrativeField;
     private javax.swing.JProgressBar narrativeProgressBar;

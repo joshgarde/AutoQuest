@@ -12,7 +12,7 @@ import java.util.Random;
  * @author ncc
  */
 public class QuestList {
-   private String [] questList = {
+   private static String [] questList = {
        "Go to Florida",
        "Go to Alaska",
        "Go Black Friday Shopping",
@@ -35,7 +35,7 @@ public class QuestList {
        "Get a Job"
    };
    
-   public String fetchQuest () {
+   public static String fetchQuest() {
        Random rand = new Random();
        String quest;
        int roll;
