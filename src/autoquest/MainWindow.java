@@ -20,6 +20,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private int level;
     private CharacterSheet characterSheet;
     private DefaultListModel characterSheetModel = new DefaultListModel();
+    private boolean intro = true;
     private Timer mainLoop = new Timer(100, this);
     
     /**
@@ -27,6 +28,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
      */
     public MainWindow() {
         initComponents();
+        mainLoop.start();
     }
 
     /**
@@ -44,15 +46,15 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        narrativeProgressBar = new javax.swing.JProgressBar();
         nameLabel = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        narrativeField = new javax.swing.JTextPane();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList<>();
-        jLabel5 = new javax.swing.JLabel();
+        levelLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jList4 = new javax.swing.JList<>();
@@ -81,15 +83,16 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         nameLabel.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
         nameLabel.setText("Name");
 
-        jTextPane1.setFont(new java.awt.Font("Papyrus", 0, 14)); // NOI18N
-        jScrollPane3.setViewportView(jTextPane1);
+        narrativeField.setEditable(false);
+        narrativeField.setFont(new java.awt.Font("Papyrus", 0, 14)); // NOI18N
+        jScrollPane3.setViewportView(narrativeField);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Equipment");
 
         jScrollPane4.setViewportView(jList3);
 
-        jLabel5.setText("Current Level: 1");
+        levelLabel.setText("Level: 0");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Killing Queue");
@@ -130,12 +133,12 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(narrativeProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(nameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5))
+                        .addComponent(levelLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -173,11 +176,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
-                    .addComponent(jLabel5))
+                    .addComponent(levelLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(narrativeProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -213,12 +216,39 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap())
         );
 
+        levelLabel.getAccessibleContext().setAccessibleName("Current Level: 0");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // Main game loop
+        if (intro) {
+            if (narrativeProgressBar.getValue() <= 30) {
+                this.narrativeField.setText("You awake in a darkened forest in the middle of nowhere.");
+            } else if (narrativeProgressBar.getValue() <= 50) {
+                this.narrativeField.setText("You have nothing but the clothes on your back and your fists.");
+            } else if (narrativeProgressBar.getValue() <= 60) {
+                this.narrativeField.setText("You are cold.");
+            } else if (narrativeProgressBar.getValue() <= 70) {
+                this.narrativeField.setText("You are alone.");
+            } else if (narrativeProgressBar.getValue() <= 90) {
+                this.narrativeField.setText("With your remaining strength, you pick yourself up and venture into the forest");
+            } else if (narrativeProgressBar.getValue() < 100){
+                this.narrativeField.setText("This is your story.");
+            } else {
+                intro = false;
+                narrativeProgressBar.setValue(0);
+                setLevel(1);
+            }
+            narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
+        }
+    }
+    
+    private void setLevel(int level) {
+        this.level = level;
+        this.levelLabel.setText("Level: " + String.valueOf(level));
     }
     
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -263,11 +293,12 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                MainWindow window = new MainWindow();
+                window.setVisible(true);
+                window.mainLoop.start();
             }
         });
         
-        mainLoop.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -279,13 +310,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
     private javax.swing.JList<String> jList4;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -293,8 +322,10 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JLabel levelLabel;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JTextPane narrativeField;
+    private javax.swing.JProgressBar narrativeProgressBar;
     // End of variables declaration//GEN-END:variables
 
     public void setCharacterSheet(CharacterSheet sheet) {
