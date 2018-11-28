@@ -266,6 +266,8 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 new MainWindow().setVisible(true);
             }
         });
+        
+        mainLoop.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
