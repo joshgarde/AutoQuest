@@ -44,4 +44,8 @@ public class NarrativeDust {
         return motivations[random.nextInt(11)];
     }
     
+    public static String difficultyGenerator() {
+        Random random = new Random();
+        return difficulties[random.nextInt(11)];
+    }
 }

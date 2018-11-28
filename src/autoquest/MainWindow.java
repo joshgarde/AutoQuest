@@ -24,6 +24,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private boolean intro = true;
     private Timer mainLoop = new Timer(100, this);
     private DefaultListModel mobList = new DefaultListModel();
+    private String currentMob;
     
     /**
      * Creates new form MainWindow
@@ -60,12 +61,13 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         mobListView = new javax.swing.JList<>();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        killingProgressBar = new javax.swing.JProgressBar();
         jLabel7 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
         johnCheckbox = new javax.swing.JCheckBox();
         jCheckBox4 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
+        sortMobListButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -129,6 +131,13 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        sortMobListButton.setText("Sort Monsters (bubble)");
+        sortMobListButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortMobListButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,7 +161,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                 .addGap(102, 102, 102)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(killingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -170,7 +179,8 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(sortMobListButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -194,7 +204,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                         .addComponent(jLabel2)
                         .addComponent(jLabel1)
                         .addComponent(jLabel6))
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(killingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane5)
@@ -204,7 +214,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sortMobListButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -228,10 +240,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
-        
         // Intro sequence
         if (intro) {
+            narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
             if (narrativeProgressBar.getValue() <= 30) {
                 this.narrativeField.setText("You awake in a darkened forest in the middle of nowhere.");
                 return;
@@ -267,51 +278,29 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             Random random = new Random();
             for (int i = 0; i < 18; i++) {
                 if (johnCheckbox.isSelected()) {
-                    if (random.nextInt(5) == 0) {
-                        mobList.addElement("THE REAL John O'Connor");
-                    } else {
-                        mobList.addElement("John O'Connor");
-                    }
+                    if (i == 0) mobList.addElement("THE REAL John O'Connor");
+                    mobList.addElement("John O'Connor");
                 }
             }
-        } else if (narrativeProgressBar.getValue() <= 20) {
-              
-        } else if (narrativeProgressBar.getValue() <= 25) {
-                
-        } else if (narrativeProgressBar.getValue() <= 30) {
-                
-        } else if (narrativeProgressBar.getValue() <= 35) {
-                
-        } else if (narrativeProgressBar.getValue() <= 40) {
-                
-        } else if (narrativeProgressBar.getValue() <= 45) {
-                
-        } else if (narrativeProgressBar.getValue() <= 50) {
-                
-        } else if (narrativeProgressBar.getValue() <= 55) {
-                
-        } else if (narrativeProgressBar.getValue() <= 60) {
-                
-        } else if (narrativeProgressBar.getValue() <= 65) {
-                
-        } else if (narrativeProgressBar.getValue() <= 70) {
-                
-        } else if (narrativeProgressBar.getValue() <= 75) {
-                
-        } else if (narrativeProgressBar.getValue() <= 80) {
-                
-        } else if (narrativeProgressBar.getValue() <= 85) {
-                
-        } else if (narrativeProgressBar.getValue() <= 90) {
-                
-        } else if (narrativeProgressBar.getValue() <= 95) {
-                
-        } else if (narrativeProgressBar.getValue() < 100){
-                
+        } else if (narrativeProgressBar.getValue() < 15) {
+        } else if (narrativeProgressBar.getValue() >= 15 && narrativeProgressBar.getValue() <= 99) {
+            if (killingProgressBar.getValue() == 0) {
+                currentMob = (String)mobList.get(0);
+                narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
+            }
+            if (killingProgressBar.getValue() != 100) {
+                killingProgressBar.setValue(killingProgressBar.getValue() + 1);
+                return;
+            } else {
+                mobList.remove(0);
+                killingProgressBar.setValue(0);
+                narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 5);
+            }
         } else {
             narrativeProgressBar.setValue(0);
             setLevel(level + 1);
         }
+        narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
     }
     
     private void setLevel(int level) {
@@ -330,6 +319,21 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void sortMobListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortMobListButtonActionPerformed
+        boolean sorted;
+        do {
+            sorted = true;
+            for (int i = 0; i < mobList.size() - 1; i += 1) {
+                if (((String)mobList.get(i)).compareTo((String)mobList.get(i + 1)) < 0) {
+                    Object tmp = mobList.get(i);
+                    mobList.set(i, mobList.get(i + 1));
+                    mobList.set(i + 1, tmp);
+                    sorted = false;
+                }
+            }
+        } while (!sorted);
+    }//GEN-LAST:event_sortMobListButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,7 +385,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -389,11 +392,13 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JCheckBox johnCheckbox;
+    private javax.swing.JProgressBar killingProgressBar;
     private javax.swing.JLabel levelLabel;
     private javax.swing.JList<String> mobListView;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextPane narrativeField;
     private javax.swing.JProgressBar narrativeProgressBar;
+    private javax.swing.JButton sortMobListButton;
     // End of variables declaration//GEN-END:variables
 
     public void setCharacterSheet(CharacterSheet sheet) {
