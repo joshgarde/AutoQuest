@@ -5,19 +5,23 @@
  */
 package autoquest;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
+import javax.swing.Timer;
 
 /**
  *
  * @author ncc
  */
-public class MainWindow extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame implements ActionListener {
     
     private int level;
     private CharacterSheet characterSheet;
     private DefaultListModel characterSheetModel = new DefaultListModel();
-
+    private Timer mainLoop = new Timer(100, this);
+    
     /**
      * Creates new form MainWindow
      */
@@ -212,6 +216,11 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Main game loop
+    }
+    
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
