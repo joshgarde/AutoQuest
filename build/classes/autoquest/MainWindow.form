@@ -41,7 +41,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jProgressBar2" min="-2" max="-2" attributes="0"/>
+                              <Component id="sellingProgressBar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
@@ -142,7 +142,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="jProgressBar2" min="-2" max="-2" attributes="0"/>
+                  <Component id="sellingProgressBar" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -346,7 +346,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sortMobListButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JProgressBar" name="jProgressBar2">
+    <Component class="javax.swing.JProgressBar" name="sellingProgressBar">
     </Component>
   </SubComponents>
 </Form>

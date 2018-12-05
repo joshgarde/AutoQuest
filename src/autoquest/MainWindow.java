@@ -29,6 +29,8 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private String currentMob;
     private ItemList item = new ItemList();
     private String currentQuest;
+    private Random random = new Random();
+    private int currentItemIndex;
     /**
      * Creates new form MainWindow
      */
@@ -71,7 +73,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jCheckBox4 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         sortMobListButton = new javax.swing.JButton();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        sellingProgressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fallout 76");
@@ -168,7 +170,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(sellingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)
                                 .addComponent(jLabel1)
                                 .addGap(102, 102, 102)
@@ -245,7 +247,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jCheckBox4))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sellingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -280,7 +282,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             } else {
                 intro = false;
                 narrativeProgressBar.setValue(0);
-                mainLoop.setDelay(25);
+                mainLoop.setDelay(1);
                 setLevel(1);
                 return;
             }
@@ -292,18 +294,17 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             this.narrativeField.setText(NarrativeDust.motivationGenerator() + currentQuest);
         } else if (narrativeProgressBar.getValue() == 10) {
             this.narrativeField.setText("Monsters surround you as you begin your quest. You must fight to survive");
-            Random random = new Random();
-            
-            for (int i = 0; i < 18; i++) {
+            for (int i = 0; i < 12; i++) {
                 if (johnCheckbox.isSelected()) {
                     if (i == 0) mobList.addElement("THE REAL John O'Connor");
                     mobList.addElement("John O'Connor");
                 } else {
+                    System.out.println(currentQuest);
                     mobList.addElement(KillingList.generateMonster(currentQuest));
                 }
             }
         } else if (narrativeProgressBar.getValue() < 15) {
-        } else if (narrativeProgressBar.getValue() >= 15 && narrativeProgressBar.getValue() < 99) {
+        } else if (narrativeProgressBar.getValue() >= 15 && narrativeProgressBar.getValue() < 75) {
             if (killingProgressBar.getValue() == 0) {
                 currentMob = (String)mobList.get(0);
                 narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
@@ -317,6 +318,21 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 killingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 5);
                 inventoryList.addElement(item.dropItem());
+                return;
+            }
+        } else if (narrativeProgressBar.getValue() >= 75 && narrativeProgressBar.getValue() < 87) {
+            if (sellingProgressBar.getValue() == 0) {
+                String item;
+                do {
+                    item = (String)inventoryList.get(random.nextInt(inventoryList.size()));
+                } while (item.equals("One Gold"));
+                narrativeField.setText("Now selling a " + item);
+            } else if (sellingProgressBar.getValue() != 100) {
+                sellingProgressBar.setValue(sellingProgressBar.getValue() + 1);
+                return;
+            } else {
+                inventoryList.addElement("One Gold");
+                narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
             }
         } else {
             narrativeProgressBar.setValue(0);
@@ -412,7 +428,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -426,6 +441,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextPane narrativeField;
     private javax.swing.JProgressBar narrativeProgressBar;
+    private javax.swing.JProgressBar sellingProgressBar;
     private javax.swing.JButton sortMobListButton;
     // End of variables declaration//GEN-END:variables
 
