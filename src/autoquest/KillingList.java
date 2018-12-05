@@ -95,7 +95,10 @@ public class KillingList {
     "Sorted List",
     "Algorithms",
     "Classes",
-    "Hashmaps"
+    "Hashmaps",
+    "9 Year Olds",
+    "T Series",
+    "PewDiePie"
     };
     
     public void initializeMonsters()
