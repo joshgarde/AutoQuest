@@ -14,16 +14,16 @@ import java.util.Random;
 public class QuestList {
    private static String [] questList = {
        "Go to Florida",
-       "Go to Alaska",
-       "Go Black Friday Shopping",
-       "Stay Home",
-       "Go to the Forest",
-       "Explore a Cave",
-       "Go to a Rave",
-       "Land on an Island",
-       "Go to Viridian City Gym",
-       "Go to the Apple Store",
-       "Go to Java Class",
+       "Go to Alaska", //
+       "Go Black Friday Shopping", //
+       "Stay Home", //
+       "Go to the Forest", //
+       "Explore a Cave", //
+       "Go to a Rave", //
+       "Land on an Island", //
+       "Go to Viridian City Gym", //
+       "Go to the Apple Store", //
+       "Go to Java Class", //
        "Buy Some Butter",
        "Learn to Walk",
        "Catch Some Pokemon",
