@@ -103,7 +103,7 @@ public class KillingList {
     
     public static void initializeMonsters()
     {
-        ArrayList<String> viridianGym = new ArrayList();
+        ArrayList<String> goToViridianCityGym = new ArrayList();
         ArrayList<String> goToAlaska = new ArrayList();
         ArrayList<String> goToFlorida = new ArrayList();
         ArrayList<String> goBlackFridayShoppingAtWalmart = new ArrayList();
@@ -125,10 +125,10 @@ public class KillingList {
         ArrayList<String> getAJob = new ArrayList();
 
         
-        viridianGym.add("Tyranitar");
-        viridianGym.add("Solrock");
-        viridianGym.add("Shuckle");
-        viridianGym.add("Sudowoodo");
+        goToViridianCityGym.add("Tyranitar");
+        goToViridianCityGym.add("Solrock");
+        goToViridianCityGym.add("Shuckle");
+        goToViridianCityGym.add("Sudowoodo");
         
         goToFlorida.add("Snookie");
         goToFlorida.add("Aligators");
@@ -238,14 +238,15 @@ public class KillingList {
         getAJob.add("Coke");
         getAJob.add("Pepsi");
         
-        monster.put("Go To Viridian City Gym", viridianGym);
-        monster.put("Go To Alaska", goToAlaska);
-        monster.put("Black Friday Shopping @ Walmart", goBlackFridayShoppingAtWalmart);
+        monster.put("Go To Viridian City Gym", goToViridianCityGym);
+        monster.put("Alaska", goToAlaska);
+        monster.put("Florida", goToFlorida);
+        monster.put("Black Friday Shopping", goBlackFridayShoppingAtWalmart);
         monster.put("Stay Home", stayHome);
-        monster.put("Go To A Forest", goToForest);
+        monster.put("Go To Forest", goToForest);
         monster.put("Go To A Rave", goToARave);
-        monster.put("Landing on Island", landOnIsland);
-        monster.put("Exploring Cave", exploreACave);
+        monster.put("Land On Island", landOnIsland);
+        monster.put("Explore A Cave", exploreACave);
         monster.put("Go To Apple Store", goToAppleStore);
         monster.put("Go To Java Class", goToJavaClass);
         monster.put("Buy Some Butter", buySomeButter);
@@ -253,7 +254,7 @@ public class KillingList {
         monster.put("Catch Some Pokemon",catchSomePokemon);
         monster.put("Be The Best Like No One Ever Was", beTheBestLikeNoOneEverWas);
         monster.put("Find The Meaning Of Life", findTheMeaningOfLife);
-        monster.put("Make friends", makeFriends);
+        monster.put("Make Friends", makeFriends);
         monster.put("Get Lunch", getLunch);
         monster.put("Teach A Machine To Love", teachAMachineToLove);
         monster.put("Get A Job", getAJob);
@@ -277,7 +278,7 @@ public class KillingList {
             
         }if (location == "Go Black Friday Shopping")
         {
-            ArrayList<String> blackFridayShopping = monster.get("Black Friday Shopping @ Walmart");
+            ArrayList<String> blackFridayShopping = monster.get("Black Friday Shopping");
             int n = rand.nextInt(blackFridayShopping.size());
             return (blackFridayShopping.get(n));
         }if (location == "Stay Home")
@@ -296,17 +297,17 @@ public class KillingList {
             ArrayList<String> exploreACave = monster.get("Explore A Cave");
             int n = rand.nextInt(exploreACave.size());
             return (exploreACave.get(n));
-        }if (location == "Go to a Rave")
+        }if (location == "Go To A Rave")
         {
             ArrayList<String> goToARave = monster.get("Go To A Rave");
             int n = rand.nextInt(goToARave.size());
             return (goToARave.get(n));
-        }if (location == "Land on Island")
+        }if (location == "Land On Island")
         {
             ArrayList<String> landOnIsland = monster.get("Land On Island");
             int n = rand.nextInt(landOnIsland.size());
             return (landOnIsland.get(n));
-        }if (location == "Go to Viridian City Gym")
+        }if (location == "Go To Viridian City Gym")
         {
             ArrayList<String> goToViridianCityGym = monster.get("Go To Viridian City Gym");
             int n = rand.nextInt(goToViridianCityGym.size());
@@ -316,7 +317,7 @@ public class KillingList {
             ArrayList<String> goToTheAppleStore = monster.get("Go To The Apple Store");
             int n = rand.nextInt(goToTheAppleStore.size());
             return (goToTheAppleStore.get(n));
-        }if (location == "Go to Java Class")
+        }if (location == "Go To Java Class")
         {
             ArrayList<String> goToJavaClass = monster.get("Go To Java Class");
             int n = rand.nextInt(goToJavaClass.size());
@@ -326,7 +327,7 @@ public class KillingList {
             ArrayList<String> buySomeButter = monster.get("Buy Some Butter");
             int n = rand.nextInt(buySomeButter.size());
             return (buySomeButter.get(n));
-        }if (location == "Learn to Walk")
+        }if (location == "Learn To Walk")
         {
             ArrayList<String> learnToWalk = monster.get("Learn To Walk");
             int n = rand.nextInt(learnToWalk.size());
@@ -336,12 +337,12 @@ public class KillingList {
             ArrayList<String> catchSomePokemon = monster.get("Catch Some Pokemon");
             int n = rand.nextInt(catchSomePokemon.size());
             return (catchSomePokemon.get(n));
-        }if (location == "Be The Best like No One ever was")
+        }if (location == "Be The Best Like No One Ever Was")
         {
             ArrayList<String> beTheBestLikeNoOneEverWas = monster.get("Be The Best Like No One Ever Was");
             int n = rand.nextInt(beTheBestLikeNoOneEverWas.size());
             return (beTheBestLikeNoOneEverWas.get(n));
-        }if (location == "Find the Meaning of Life")
+        }if (location == "Find The Meaning Of Life")
         {
             ArrayList<String> findTheMeaningOfLife = monster.get("Find The Meaning Of Life");
             int n = rand.nextInt(findTheMeaningOfLife.size());
@@ -356,12 +357,12 @@ public class KillingList {
             ArrayList<String> getLunch = monster.get("Get Lunch");
             int n = rand.nextInt(getLunch.size());
             return (getLunch.get(n));
-        }if (location == "Teach a Machine to Love")
+        }if (location == "Teach A Machine To Love")
         {
             ArrayList<String> teachAMachineToLove = monster.get("Teach A Machine To Love");
             int n = rand.nextInt(teachAMachineToLove.size());
             return (teachAMachineToLove.get(n));
-        }if (location == "Get a Job")
+        }if (location == "Get A Job")
         {
             ArrayList<String> getAJob = monster.get("Get A Job");
             int n = rand.nextInt(getAJob.size());

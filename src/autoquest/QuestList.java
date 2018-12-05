@@ -13,26 +13,26 @@ import java.util.Random;
  */
 public class QuestList {
    private static String [] questList = {
-       "Go to Florida",
-       "Go to Alaska", //
+       "Go To Florida",
+       "Go To Alaska", //
        "Go Black Friday Shopping", //
        "Stay Home", //
-       "Go to the Forest", //
-       "Explore a Cave", //
-       "Go to a Rave", //
-       "Land on an Island", //
-       "Go to Viridian City Gym", //
-       "Go to the Apple Store", //
-       "Go to Java Class", //
+       "Go To Forest", //
+       "Explore A Cave", //
+       "Go To A Rave", //
+       "Land On Island", //
+       "Go To Viridian City Gym", //
+       "Go To Apple Store", //
+       "Go To Java Class", //
        "Buy Some Butter",
-       "Learn to Walk",
+       "Learn To Walk",
        "Catch Some Pokemon",
-       "Be the Best like No One ever was",
-       "Find the Meaning of Life",
+       "Be The Best Like No One Ever Was",
+       "Find The Meaning Of Life",
        "Make Friends",
        "Get Lunch",
-       "Teach a Machine to Love",
-       "Get a Job"
+       "Teach A Machine To Love",
+       "Get A Job"
    };
    
    public static String fetchQuest() {

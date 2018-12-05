@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ncc/Documents/NetBeansProjects/AutoQuest/src/autoquest/AutoQuest.java</file>
-            <file>file:/C:/Users/ncc/Documents/NetBeansProjects/AutoQuest/src/autoquest/MainWindow.java</file>
-            <file>file:/C:/Users/ncc/Documents/NetBeansProjects/AutoQuest/src/autoquest/MainMenu.java</file>
-            <file>file:/C:/Users/ncc/Documents/NetBeansProjects/AutoQuest/src/autoquest/CharacterSheet.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/AutoQuest.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/NarrativeDust.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/MainMenu.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/CharacterSheet.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/QuestList.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/ItemList.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/KillingList.java</file>
+            <file>file:/C:/Users/ncc/Desktop/AutoQuest/src/autoquest/MainWindow.java</file>
         </group>
     </open-files>
 </project-private>
