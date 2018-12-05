@@ -25,8 +25,12 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private Timer mainLoop = new Timer(100, this);
     private DefaultListModel mobList = new DefaultListModel();
     private DefaultListModel inventoryList = new DefaultListModel();
+    private DefaultListModel equipmentList = new DefaultListModel();
     private String currentMob;
     private ItemList item = new ItemList();
+    private String currentQuest;
+    private Random random = new Random();
+    private int currentItemIndex;
     /**
      * Creates new form MainWindow
      */
@@ -69,8 +73,10 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jCheckBox4 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         sortMobListButton = new javax.swing.JButton();
+        sellingProgressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Fallout 76");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -83,6 +89,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Inventory");
 
+        jList2.setModel(inventoryList);
         jList2.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 jList2ComponentAdded(evt);
@@ -100,6 +107,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Equipment");
 
+        jList3.setModel(equipmentList);
         jScrollPane4.setViewportView(jList3);
 
         levelLabel.setText("Level: 0");
@@ -120,7 +128,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        johnCheckbox.setSelected(true);
         johnCheckbox.setLabel("John O'Connor");
         johnCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,7 +169,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(175, 175, 175)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sellingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
                                 .addComponent(jLabel1)
                                 .addGap(102, 102, 102)
                                 .addComponent(jLabel6)
@@ -206,36 +215,39 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel6))
-                    .addComponent(killingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel6))
+                            .addComponent(killingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane5)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(sortMobListButton)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sortMobListButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCheckBox2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel7))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(johnCheckbox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox4))
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCheckBox2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(johnCheckbox)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCheckBox4))
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(sellingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -270,7 +282,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             } else {
                 intro = false;
                 narrativeProgressBar.setValue(0);
-                mainLoop.setDelay(250);
+                mainLoop.setDelay(1);
                 setLevel(1);
                 return;
             }
@@ -278,19 +290,21 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         
         // Main game loop
         if (narrativeProgressBar.getValue() == 1) {
-            this.narrativeField.setText(NarrativeDust.motivationGenerator() + QuestList.fetchQuest());
+            currentQuest = QuestList.fetchQuest();
+            this.narrativeField.setText(NarrativeDust.motivationGenerator() + currentQuest);
         } else if (narrativeProgressBar.getValue() == 10) {
             this.narrativeField.setText("Monsters surround you as you begin your quest. You must fight to survive");
-            Random random = new Random();
-            
-            for (int i = 0; i < 18; i++) {
+            for (int i = 0; i < 12; i++) {
                 if (johnCheckbox.isSelected()) {
                     if (i == 0) mobList.addElement("THE REAL John O'Connor");
                     mobList.addElement("John O'Connor");
+                } else {
+                    System.out.println(currentQuest);
+                    mobList.addElement(KillingList.generateMonster(currentQuest));
                 }
             }
         } else if (narrativeProgressBar.getValue() < 15) {
-        } else if (narrativeProgressBar.getValue() >= 15 && narrativeProgressBar.getValue() <= 99) {
+        } else if (narrativeProgressBar.getValue() >= 15 && narrativeProgressBar.getValue() < 75) {
             if (killingProgressBar.getValue() == 0) {
                 currentMob = (String)mobList.get(0);
                 narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
@@ -304,6 +318,21 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 killingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 5);
                 inventoryList.addElement(item.dropItem());
+                return;
+            }
+        } else if (narrativeProgressBar.getValue() >= 75 && narrativeProgressBar.getValue() < 87) {
+            if (sellingProgressBar.getValue() == 0) {
+                String item;
+                do {
+                    item = (String)inventoryList.get(random.nextInt(inventoryList.size()));
+                } while (item.equals("One Gold"));
+                narrativeField.setText("Now selling a " + item);
+            } else if (sellingProgressBar.getValue() != 100) {
+                sellingProgressBar.setValue(sellingProgressBar.getValue() + 1);
+                return;
+            } else {
+                inventoryList.addElement("One Gold");
+                narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
             }
         } else {
             narrativeProgressBar.setValue(0);
@@ -315,6 +344,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private void setLevel(int level) {
         this.level = level;
         this.levelLabel.setText("Level: " + String.valueOf(level));
+        equipmentList.addElement(Equipment.levelUp(level));
     }
     
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
@@ -411,6 +441,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextPane narrativeField;
     private javax.swing.JProgressBar narrativeProgressBar;
+    private javax.swing.JProgressBar sellingProgressBar;
     private javax.swing.JButton sortMobListButton;
     // End of variables declaration//GEN-END:variables
 

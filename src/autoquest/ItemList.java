@@ -5,6 +5,7 @@
  */
 package autoquest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -99,9 +100,8 @@ public class ItemList {
     public String dropItem() {
         Random rand = new Random();
         
-        Set<String> set = itemList.keySet();
-        Object[] items = itemList.keySet().toArray();
-        return items[rand.nextInt(set.size())].toString();
+        ArrayList<String> items = new ArrayList<String>(itemList.keySet());
+        return items.get(rand.nextInt(items.size()));
     }
     
     public Integer dropPrice(String itemDropped) {

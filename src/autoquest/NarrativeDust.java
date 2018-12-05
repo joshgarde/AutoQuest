@@ -41,11 +41,11 @@ public class NarrativeDust {
     
     public static String motivationGenerator() {
         Random random = new Random();
-        return motivations[random.nextInt(11)];
+        return motivations[random.nextInt(10)];
     }
     
     public static String difficultyGenerator() {
         Random random = new Random();
-        return difficulties[random.nextInt(11)];
+        return difficulties[random.nextInt(10)];
     }
 }

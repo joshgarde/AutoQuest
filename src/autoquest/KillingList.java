@@ -16,9 +16,9 @@ import java.util.Random;
  * @author ncc
  */
 public class KillingList {
-    HashMap<String, ArrayList> monster = new HashMap();
+    static HashMap<String, ArrayList> monster = new HashMap();
 
-    private String [] killingList =
+    private static String[] killingList =
     {
     "John W. O'Connor" ,
     "The REAL John W. O'Connor" ,
@@ -135,7 +135,7 @@ public class KillingList {
     "The Black-Eyed Dread Cat",
     };
     
-    public void initializeMonsters()
+    public static void initializeMonsters()
     {
         ArrayList<String> viridianGym = new ArrayList();
         ArrayList<String> goToAlaska = new ArrayList();
@@ -272,19 +272,19 @@ public class KillingList {
         getAJob.add("Coke");
         getAJob.add("Pepsi");
         
-        monster.put("Viridian Gym", viridianGym);
-        monster.put("Alaska", goToAlaska);
+        monster.put("Go To Viridian City Gym", viridianGym);
+        monster.put("Go To Alaska", goToAlaska);
         monster.put("Black Friday Shopping @ Walmart", goBlackFridayShoppingAtWalmart);
-        monster.put("Home", stayHome);
-        monster.put("Forest", goToForest);
-        monster.put("Rave", goToARave);
+        monster.put("Stay Home", stayHome);
+        monster.put("Go To A Forest", goToForest);
+        monster.put("Go To A Rave", goToARave);
         monster.put("Landing on Island", landOnIsland);
         monster.put("Exploring Cave", exploreACave);
-        monster.put("Going to Apple Store", goToAppleStore);
-        monster.put("Attending Java Class", goToJavaClass);
-        monster.put("buy Some Butter", buySomeButter);
+        monster.put("Go To Apple Store", goToAppleStore);
+        monster.put("Go To Java Class", goToJavaClass);
+        monster.put("Buy Some Butter", buySomeButter);
         monster.put("Learn To Walk", learnToWalk);
-        monster.put("catchSomePokemon",catchSomePokemon);
+        monster.put("Catch Some Pokemon",catchSomePokemon);
         monster.put("Be The Best Like No One Ever Was", beTheBestLikeNoOneEverWas);
         monster.put("Find The Meaning Of Life", findTheMeaningOfLife);
         monster.put("Make friends", makeFriends);
@@ -293,7 +293,7 @@ public class KillingList {
         monster.put("Get A Job", getAJob);
     }
     
-    public String generateMonster(String location) {
+    public static String generateMonster(String location) {
         
         Random rand = new Random();
         
@@ -345,7 +345,7 @@ public class KillingList {
             ArrayList<String> goToViridianCityGym = monster.get("Go To Viridian City Gym");
             int n = rand.nextInt(goToViridianCityGym.size());
             return (goToViridianCityGym.get(n));
-        }if (location == "Go to the Apple Store")
+        }if (location == "Go To Apple Store")
         {
             ArrayList<String> goToTheAppleStore = monster.get("Go To The Apple Store");
             int n = rand.nextInt(goToTheAppleStore.size());
