@@ -5,10 +5,24 @@
  */
 package autoquest;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javax.swing.JPanel;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 /**
  *
@@ -632,6 +646,27 @@ public class MainMenu extends javax.swing.JFrame {
             int[] roll = previousRolls.poll();
             CharacterSheet sheet = new CharacterSheet(nameField.getText(), roll[0], roll[1], roll[2], roll[3]);
             
+            /*
+            JFrame introFrame = new JFrame();
+            MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+            Canvas c = new Canvas();
+            c.setBackground(Color.black);
+            JPanel p = new JPanel();
+            p.setLayout(new BorderLayout());
+            p.add(c, BorderLayout.CENTER);
+            introFrame.add(p, BorderLayout.CENTER);
+            EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+            mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
+            introFrame.setVisible(true);
+            mediaPlayer.playMedia("intro.mp4");
+            mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+                @Override
+                public void finished(uk.co.caprica.vlcj.player.MediaPlayer mediaPlayer) {
+                    System.out.println("TEST");
+                }
+            });
+            introFrame.setExtendedState( introFrame.getExtendedState()|JFrame.MAXIMIZED_BOTH );*/
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.setCharacterSheet(sheet);
             mainWindow.setVisible(true);

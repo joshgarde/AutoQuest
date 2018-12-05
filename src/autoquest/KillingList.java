@@ -16,9 +16,9 @@ import java.util.Random;
  * @author ncc
  */
 public class KillingList {
-    HashMap<String, ArrayList> monster = new HashMap();
+    static HashMap<String, ArrayList> monster = new HashMap();
 
-    private String [] killingList =
+    private static String[] killingList =
     {
     "John W. O'Connor" ,
     "The REAL John W. O'Connor" ,
@@ -98,7 +98,7 @@ public class KillingList {
     "Hashmaps"
     };
     
-    public void initializeMonsters()
+    public static void initializeMonsters()
     {
         ArrayList<String> viridianGym = new ArrayList();
         ArrayList<String> goToAlaska = new ArrayList();
@@ -159,7 +159,7 @@ public class KillingList {
         monster.put("Attending Java Class", goToJavaClass);
     }
     
-    public String generateMonster(String location) {
+    public static String generateMonster(String location) {
         
         Random rand = new Random();
         

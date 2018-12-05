@@ -12,17 +12,17 @@ import java.util.HashMap;
  * @author ncc
  */
 public class Equipment {
-    private HashMap<Integer, String> equipment = new HashMap<>();
-    private String headGear = "Head: ";
-    private String faceGear = "Face: ";
-    private String neckGear = "Neck: ";
-    private String chestGear = "Chest: ";
-    private String greavesGear = "Greaves: ";
-    private String gloveGear = "Gloves: ";
-    private String pantsGear = "Pants: ";
-    private String footGear = "Shoes: ";
+    private static HashMap<Integer, String> equipment = new HashMap<>();
+    private static String headGear = "Head: ";
+    private static String faceGear = "Face: ";
+    private static String neckGear = "Neck: ";
+    private static String chestGear = "Chest: ";
+    private static String greavesGear = "Greaves: ";
+    private static String gloveGear = "Gloves: ";
+    private static String pantsGear = "Pants: ";
+    private static String footGear = "Shoes: ";
     
-    public void equipmentLevels(){
+    public static void equipmentLevels(){
      equipment.put(1, "Plastic Helm");
      equipment.put(2, "Plastic Goggles");
      equipment.put(3, "Plastic Necklace");
@@ -65,7 +65,7 @@ public class Equipment {
      equipment.put(40, "Adamantium Boots");
     }
     
-    public String levelUp(Integer level){
+    public static String levelUp(Integer level){
         String newItem;
         
         newItem = equipment.get(level);
