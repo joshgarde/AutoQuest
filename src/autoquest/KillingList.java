@@ -102,6 +102,7 @@ public class KillingList {
     {
         ArrayList<String> viridianGym = new ArrayList();
         ArrayList<String> goToAlaska = new ArrayList();
+        ArrayList<String> goToFlorida = new ArrayList();
         ArrayList<String> goBlackFridayShoppingAtWalmart = new ArrayList();
         ArrayList<String> stayHome = new ArrayList();
         ArrayList<String> goToForest = new ArrayList();
@@ -110,44 +111,131 @@ public class KillingList {
         ArrayList<String> exploreACave = new ArrayList();
         ArrayList<String> goToAppleStore = new ArrayList();
         ArrayList<String> goToJavaClass = new ArrayList();
+        ArrayList<String> buySomeButter = new ArrayList();
+        ArrayList<String> learnToWalk = new ArrayList();
+        ArrayList<String> catchSomePokemon = new ArrayList();
+        ArrayList<String> beTheBestLikeNoOneEverWas = new ArrayList();
+        ArrayList<String> findTheMeaningOfLife = new ArrayList();
+        ArrayList<String> makeFriends = new ArrayList();
+        ArrayList<String> getLunch = new ArrayList();
+        ArrayList<String> teachAMachineToLove = new ArrayList();
+        ArrayList<String> getAJob = new ArrayList();
+
         
         viridianGym.add("Tyranitar");
         viridianGym.add("Solrock");
         viridianGym.add("Shuckle");
         viridianGym.add("Sudowoodo");
+        
+        goToFlorida.add("Snookie");
+        goToFlorida.add("Aligators");
+        goToFlorida.add("Florida Man");
+        goToFlorida.add("That One guy");
+        goToFlorida.add("The Kadashians");
+        
         goToAlaska.add("Polar Bear");
         goToAlaska.add("Penguin");
         goToAlaska.add("Blockbuster Employee");
+        
         goBlackFridayShoppingAtWalmart.add("Guy Stealing a TV");
         goBlackFridayShoppingAtWalmart.add("Cashier");
         goBlackFridayShoppingAtWalmart.add("An Binch");
         goBlackFridayShoppingAtWalmart.add("Officer Trying to Arrest You");
+        
         stayHome.add("Relax");
+        
         goToForest.add("Big Black Bear");
         goToForest.add("Senpai");
         goToForest.add("Murlocks");
         goToForest.add("Your Lost Lover");
         goToForest.add("Some Wood ;^)");
-        goToARave.add(" ");
+        
+        goToARave.add("coke");
+        goToARave.add("weeed");
+        goToARave.add("Speed");
+        goToARave.add("Adderall");
+        
         landOnIsland.add("Pirates");
         landOnIsland.add("Da Booty");
         landOnIsland.add("Stranded People");
+        
         exploreACave.add("Dwarf");
         exploreACave.add("The Legendary Bird, Moltres");
         exploreACave.add("Yourself");
+        
         goToAppleStore.add("IPhones");
         goToAppleStore.add("IMacs");
         goToAppleStore.add("Apple Employee");
         goToAppleStore.add("IPads");
         goToAppleStore.add("Apple Watches");
+        
         goToJavaClass.add("Unsorted List");
         goToJavaClass.add("Sorted List");
         goToJavaClass.add("Algorithms");
         goToJavaClass.add("Classes");
         goToJavaClass.add("Hashmaps");
         
-        monster.put("Viridian Gym", viridianGym);
+        buySomeButter.add("Milky Butter");
+        buySomeButter.add("Ungreatful Butter");
+        buySomeButter.add("Hateful Butter");
+        buySomeButter.add("Ugly Butter");
+        buySomeButter.add("Guntly Butter");
+        buySomeButter.add("Krispy Butter");
         
+        learnToWalk.add("On a crack");
+        learnToWalk.add("Aint nothing gansta");
+        learnToWalk.add("Some Breaking Bones");
+        learnToWalk.add("and Falling down");
+        learnToWalk.add("the dance to \"CareLess Whispers\"");
+        learnToWalk.add("A tree");
+        
+        catchSomePokemon.add("Dratina");
+        catchSomePokemon.add("The Sh*t Ninetales");
+        catchSomePokemon.add("UngreatFul Lugia");
+        catchSomePokemon.add("Diglit");
+        catchSomePokemon.add("Syther");
+        catchSomePokemon.add("Charmander");
+        
+        beTheBestLikeNoOneEverWas.add("Off the Professor");
+        beTheBestLikeNoOneEverWas.add("That Kerk");
+        beTheBestLikeNoOneEverWas.add("Your Significant Other");
+        beTheBestLikeNoOneEverWas.add("Off Kenny");
+        beTheBestLikeNoOneEverWas.add("I Dont KNOW");
+        
+        findTheMeaningOfLife.add("Under a rock");
+        findTheMeaningOfLife.add("In your house");
+        findTheMeaningOfLife.add("In your soul");
+        findTheMeaningOfLife.add("In those sweet gentle loving eyes that you have");
+        findTheMeaningOfLife.add("Just stop looking");
+        
+        makeFriends.add("girl");
+        makeFriends.add("family");
+        makeFriends.add("professor");
+        makeFriends.add("HomelessMan");
+        makeFriends.add("Salvation Army BellRinger");
+        makeFriends.add("soulmate, be rejected");
+        makeFriends.add("Divine Creator");
+        
+        getLunch.add("McDonalds");
+        getLunch.add("Jacck In The Box");
+        getLunch.add("Best Buy");
+        getLunch.add("Waba Grill");
+        getLunch.add("McDonalds");
+        
+        teachAMachineToLove.add("bender");
+        teachAMachineToLove.add("wallie");
+        teachAMachineToLove.add("dave");
+        teachAMachineToLove.add("eve");
+        teachAMachineToLove.add("wallR");
+        teachAMachineToLove.add("Gundumbs");
+        
+        getAJob.add("CostCo");
+        getAJob.add("America");
+        getAJob.add("That job you applied for but never got a call back");
+        getAJob.add("Coke");
+        getAJob.add("Pepsi");
+        
+        monster.put("Viridian Gym", viridianGym);
         monster.put("Alaska", goToAlaska);
         monster.put("Black Friday Shopping @ Walmart", goBlackFridayShoppingAtWalmart);
         monster.put("Home", stayHome);
@@ -157,6 +245,15 @@ public class KillingList {
         monster.put("Exploring Cave", exploreACave);
         monster.put("Going to Apple Store", goToAppleStore);
         monster.put("Attending Java Class", goToJavaClass);
+        monster.put("buy Some Butter", buySomeButter);
+        monster.put("Learn To Walk", learnToWalk);
+        monster.put("catchSomePokemon",catchSomePokemon);
+        monster.put("Be The Best Like No One Ever Was", beTheBestLikeNoOneEverWas);
+        monster.put("Find The Meaning Of Life", findTheMeaningOfLife);
+        monster.put("Make friends", makeFriends);
+        monster.put("Get Lunch", getLunch);
+        monster.put("Teach A Machine To Love", teachAMachineToLove);
+        monster.put("Get A Job", getAJob);
     }
     
     public String generateMonster(String location) {
