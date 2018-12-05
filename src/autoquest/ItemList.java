@@ -72,6 +72,27 @@ public class ItemList {
         itemList.put("Lotion", 66);
         itemList.put("Goochie Belt", 78);
         itemList.put("StayPlastion", 300);
+        itemList.put("Power Bank with 12% charge", 12);
+        itemList.put("A \"Canvas\" Bag", 76);
+        itemList.put("Ahr Tee Ekcs 2080TeeAie", 1300);
+        itemList.put("John W O'Connor's High Tech Door Bell", 200);
+        itemList.put("A Ghost in the Machine", 99);
+        itemList.put("Irish Wrist Watch", 23);
+        itemList.put("Braised Pork Bowl", 8);
+        itemList.put("Mike, AKA Micycle", 25);
+        itemList.put("Bike, AKA Bichael", 25);
+        itemList.put("A Short Swedish Man", 4269);
+        itemList.put("Project: Dave", 18);
+        itemList.put("Fallout 76", 0);
+        itemList.put("Sharingan", 5);
+        itemList.put("BFG AKA Bad Formatting and Games", 999);
+        itemList.put("NVMe SSD", 2000);
+        itemList.put("Blu Ray Disk Read/Write Drive", 53);
+        itemList.put("Yu-Gi-Oh!™ Trading Cards", 32);
+        itemList.put("PokeMon™ Trading Cards", 15);
+        itemList.put("Spare Change", 3);
+        itemList.put("King K Rool's Crown", 18);
+        itemList.put("Salad", 1);
         
         return itemList;
     }

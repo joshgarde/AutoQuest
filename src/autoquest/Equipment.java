@@ -76,6 +76,9 @@ public class Equipment {
         if(newItem.contains("Goggles") || newItem.contains("Mask")){
             return "Face: " + newItem;
         }
+        if(newItem.contains("Necklace")){
+            return "Neck: " + newItem;
+        }
         if(newItem.contains("Shirt") || newItem.contains("Chestplate")){
             return "Chest: " + newItem;
         }
