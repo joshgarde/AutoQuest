@@ -53,7 +53,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         characterSheetList = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        inventoryListView = new javax.swing.JList<>();
         narrativeProgressBar = new javax.swing.JProgressBar();
         nameLabel = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -89,13 +89,13 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Inventory");
 
-        jList2.setModel(inventoryList);
-        jList2.addContainerListener(new java.awt.event.ContainerAdapter() {
+        inventoryListView.setModel(inventoryList);
+        inventoryListView.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jList2ComponentAdded(evt);
+                inventoryListViewComponentAdded(evt);
             }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(inventoryListView);
 
         nameLabel.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
         nameLabel.setText("Name");
@@ -308,7 +308,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             if (killingProgressBar.getValue() == 0) {
                 currentMob = (String)mobList.get(0);
                 narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
-                
             }
             if (killingProgressBar.getValue() != 100) {
                 killingProgressBar.setValue(killingProgressBar.getValue() + 1);
@@ -318,22 +317,33 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 killingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 5);
                 inventoryList.addElement(item.dropItem());
+                inventoryListView.ensureIndexIsVisible(inventoryList.size() - 1);
                 return;
             }
         } else if (narrativeProgressBar.getValue() >= 75 && narrativeProgressBar.getValue() < 87) {
             if (sellingProgressBar.getValue() == 0) {
                 String item;
                 do {
-                    item = (String)inventoryList.get(random.nextInt(inventoryList.size()));
+                    currentItemIndex = random.nextInt(inventoryList.size());
+                    item = (String)inventoryList.get(currentItemIndex);
                 } while (item.equals("One Gold"));
                 narrativeField.setText("Now selling a " + item);
-            } else if (sellingProgressBar.getValue() != 100) {
+                inventoryListView.ensureIndexIsVisible(currentItemIndex);
+            }
+            if (sellingProgressBar.getValue() != 100) {
                 sellingProgressBar.setValue(sellingProgressBar.getValue() + 1);
                 return;
             } else {
+                inventoryList.removeElementAt(currentItemIndex);
                 inventoryList.addElement("One Gold");
+                sellingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
+                return;
             }
+        } else if (narrativeProgressBar.getValue() >= 87 && narrativeProgressBar.getValue() < 95) {
+            narrativeField.setText("Tired from your last adventure, you take a short rest in the forest...");
+        } else if (narrativeProgressBar.getValue() >= 95 && narrativeProgressBar.getValue() < 99) {
+            narrativeField.setText("Until next time.");
         } else {
             narrativeProgressBar.setValue(0);
             setLevel(level + 1);
@@ -374,9 +384,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         } while (!sorted);
     }//GEN-LAST:event_sortMobListButtonActionPerformed
 
-    private void jList2ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jList2ComponentAdded
+    private void inventoryListViewComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_inventoryListViewComponentAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jList2ComponentAdded
+    }//GEN-LAST:event_inventoryListViewComponentAdded
 
     /**
      * @param args the command line arguments
@@ -418,6 +428,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> characterSheetList;
+    private javax.swing.JList<String> inventoryListView;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox4;
@@ -426,7 +437,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -20,6 +20,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -646,7 +647,8 @@ public class MainMenu extends javax.swing.JFrame {
             int[] roll = previousRolls.poll();
             CharacterSheet sheet = new CharacterSheet(nameField.getText(), roll[0], roll[1], roll[2], roll[3]);
             
-            /*
+            
+           
             JFrame introFrame = new JFrame();
             MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
             Canvas c = new Canvas();
@@ -658,19 +660,16 @@ public class MainMenu extends javax.swing.JFrame {
             EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
             mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
             introFrame.setVisible(true);
+            
             mediaPlayer.playMedia("intro.mp4");
-            mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-                @Override
-                public void finished(uk.co.caprica.vlcj.player.MediaPlayer mediaPlayer) {
-                    System.out.println("TEST");
-                }
-            });
-            introFrame.setExtendedState( introFrame.getExtendedState()|JFrame.MAXIMIZED_BOTH );*/
+            introFrame.setExtendedState( introFrame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+            
+            
 
-            MainWindow mainWindow = new MainWindow();
+            /*MainWindow mainWindow = new MainWindow();
             mainWindow.setCharacterSheet(sheet);
             mainWindow.setVisible(true);
-            setVisible(false);
+            setVisible(false);*/
         }
     }//GEN-LAST:event_playButtonActionPerformed
 
