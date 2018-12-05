@@ -24,8 +24,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private boolean intro = true;
     private Timer mainLoop = new Timer(100, this);
     private DefaultListModel mobList = new DefaultListModel();
+    private DefaultListModel inventoryList = new DefaultListModel();
     private String currentMob;
-    
+    private ItemList item = new ItemList();
     /**
      * Creates new form MainWindow
      */
@@ -82,6 +83,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Inventory");
 
+        jList2.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                jList2ComponentAdded(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList2);
 
         nameLabel.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
@@ -276,6 +282,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         } else if (narrativeProgressBar.getValue() == 10) {
             this.narrativeField.setText("Monsters surround you as you begin your quest. You must fight to survive");
             Random random = new Random();
+            
             for (int i = 0; i < 18; i++) {
                 if (johnCheckbox.isSelected()) {
                     if (i == 0) mobList.addElement("THE REAL John O'Connor");
@@ -287,6 +294,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             if (killingProgressBar.getValue() == 0) {
                 currentMob = (String)mobList.get(0);
                 narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
+                
             }
             if (killingProgressBar.getValue() != 100) {
                 killingProgressBar.setValue(killingProgressBar.getValue() + 1);
@@ -295,6 +303,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 mobList.remove(0);
                 killingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 5);
+                inventoryList.addElement(item.dropItem());
             }
         } else {
             narrativeProgressBar.setValue(0);
@@ -334,6 +343,10 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             }
         } while (!sorted);
     }//GEN-LAST:event_sortMobListButtonActionPerformed
+
+    private void jList2ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jList2ComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList2ComponentAdded
 
     /**
      * @param args the command line arguments

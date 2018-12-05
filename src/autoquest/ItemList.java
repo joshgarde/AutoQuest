@@ -8,6 +8,7 @@ package autoquest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
@@ -77,10 +78,9 @@ public class ItemList {
     public String dropItem() {
         Random rand = new Random();
         
-        Object[] values = itemList.values().toArray();
-        drop = (String) values[rand.nextInt(values.length)];
-        
-        return drop;
+        Set<String> set = itemList.keySet();
+        Object[] items = itemList.keySet().toArray();
+        return items[rand.nextInt(set.size())].toString();
     }
     
     public Integer dropPrice(String itemDropped) {

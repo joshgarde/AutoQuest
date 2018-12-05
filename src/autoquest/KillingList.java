@@ -161,70 +161,112 @@ public class KillingList {
     
     public String generateMonster(String location) {
         
+        Random rand = new Random();
+        
         if (location == "Go To Alaska")
         {
             ArrayList<String> alaska = monster.get("Alaska");
+            int n = rand.nextInt(alaska.size());
+            return (alaska.get(n));  
         }
         if (location == "Go To Florida")
         {
             ArrayList<String> florida = monster.get("Florida");
+            int n = rand.nextInt(florida.size());
+            return (florida.get(n));
             
         }if (location == "Go Black Friday Shopping")
         {
             ArrayList<String> blackFridayShopping = monster.get("Black Friday Shopping @ Walmart");
+            int n = rand.nextInt(blackFridayShopping.size());
+            return (blackFridayShopping.get(n));
         }if (location == "Stay Home")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> stayHome = monster.get("Stay Home");
+            int n = rand.nextInt(stayHome.size());
+            return (stayHome.get(n));
         }
         if (location == "Go To Forest")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> goToForest = monster.get("Go To Forest");
+            int n = rand.nextInt(goToForest.size());
+            return (goToForest.get(n));
         }if (location == "Explore A Cave")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> exploreACave = monster.get("Explore A Cave");
+            int n = rand.nextInt(exploreACave.size());
+            return (exploreACave.get(n));
         }if (location == "Go to a Rave")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> goToARave = monster.get("Go To A Rave");
+            int n = rand.nextInt(goToARave.size());
+            return (goToARave.get(n));
         }if (location == "Land on Island")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> landOnIsland = monster.get("Land On Island");
+            int n = rand.nextInt(landOnIsland.size());
+            return (landOnIsland.get(n));
         }if (location == "Go to Viridian City Gym")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> goToViridianCityGym = monster.get("Go To Viridian City Gym");
+            int n = rand.nextInt(goToViridianCityGym.size());
+            return (goToViridianCityGym.get(n));
         }if (location == "Go to the Apple Store")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> goToTheAppleStore = monster.get("Go To The Apple Store");
+            int n = rand.nextInt(goToTheAppleStore.size());
+            return (goToTheAppleStore.get(n));
         }if (location == "Go to Java Class")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> goToJavaClass = monster.get("Go To Java Class");
+            int n = rand.nextInt(goToJavaClass.size());
+            return (goToJavaClass.get(n));
         }if (location == "Buy Some Butter")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> buySomeButter = monster.get("Buy Some Butter");
+            int n = rand.nextInt(buySomeButter.size());
+            return (buySomeButter.get(n));
         }if (location == "Learn to Walk")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> learnToWalk = monster.get("Learn To Walk");
+            int n = rand.nextInt(learnToWalk.size());
+            return (learnToWalk.get(n));
         }if (location == "Catch Some Pokemon")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> catchSomePokemon = monster.get("Catch Some Pokemon");
+            int n = rand.nextInt(catchSomePokemon.size());
+            return (catchSomePokemon.get(n));
         }if (location == "Be The Best like No One ever was")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> beTheBestLikeNoOneEverWas = monster.get("Be The Best Like No One Ever Was");
+            int n = rand.nextInt(beTheBestLikeNoOneEverWas.size());
+            return (beTheBestLikeNoOneEverWas.get(n));
         }if (location == "Find the Meaning of Life")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> findTheMeaningOfLife = monster.get("Find The Meaning Of Life");
+            int n = rand.nextInt(findTheMeaningOfLife.size());
+            return (findTheMeaningOfLife.get(n));
         }if (location == "Make Friends")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> makeFriends = monster.get("Make Friends");
+            int n = rand.nextInt(makeFriends.size());
+            return (makeFriends.get(n));
         }if (location == "Get Lunch")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> getLunch = monster.get("Get Lunch");
+            int n = rand.nextInt(getLunch.size());
+            return (getLunch.get(n));
         }if (location == "Teach a Machine to Love")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> teachAMachineToLove = monster.get("Teach A Machine To Love");
+            int n = rand.nextInt(teachAMachineToLove.size());
+            return (teachAMachineToLove.get(n));
         }if (location == "Get a Job")
         {
-            ArrayList<String> alaska = monster.get("Alaska");
+            ArrayList<String> getAJob = monster.get("Get A Job");
+            int n = rand.nextInt(getAJob.size());
+            return (getAJob.get(n));
         }
-        return " ";
+        return "Well something went wrong and we dont know either so dont ask";
     }
 }
