@@ -10,7 +10,18 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.Timer;
 import autoquest.NarrativeDust;
+import com.mashape.unirest.http.Unirest;
+import java.awt.Component;
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import javax.swing.JOptionPane;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -29,16 +40,28 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private String currentMob;
     private ItemList item = new ItemList();
     private String currentQuest;
+    private String currentJohnRepo;
     private Random random = new Random();
     private int currentItemIndex;
+    private HeadlessMediaPlayer mediaPlayer;
+    private ArrayList<String> johnRepos = new ArrayList<String>();
+    
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
+        MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+        mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();        
+    
         initComponents();
-        mainLoop.start();
     }
 
+    @Override
+    public void setVisible(boolean v) {
+        super.setVisible(v);
+        mainLoop.start();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,16 +91,14 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         mobListView = new javax.swing.JList<>();
         killingProgressBar = new javax.swing.JProgressBar();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        dlcCheckbox = new javax.swing.JCheckBox();
         johnCheckbox = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
+        hdRemixCheckbox = new javax.swing.JCheckBox();
         sortMobListButton = new javax.swing.JButton();
         sellingProgressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fallout 76");
-        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Character Sheet");
@@ -121,10 +142,10 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Gameplay Options");
 
-        jCheckBox2.setLabel("DLC Content");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+        dlcCheckbox.setLabel("DLC Content");
+        dlcCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
+                dlcCheckboxActionPerformed(evt);
             }
         });
 
@@ -135,12 +156,10 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jCheckBox4.setText("HD Remix");
-
-        jButton1.setText("Sort Inventory (randomly)");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        hdRemixCheckbox.setText("HD Remix");
+        hdRemixCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                hdRemixCheckboxActionPerformed(evt);
             }
         });
 
@@ -184,9 +203,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(johnCheckbox)
-                                            .addComponent(jCheckBox4)
+                                            .addComponent(hdRemixCheckbox)
                                             .addComponent(jLabel7)
-                                            .addComponent(jCheckBox2)))
+                                            .addComponent(dlcCheckbox)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +213,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(sortMobListButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -230,10 +248,8 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(sortMobListButton)))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(sortMobListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -241,11 +257,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox2)
+                                        .addComponent(dlcCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(johnCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox4))
+                                        .addComponent(hdRemixCheckbox))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(sellingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -282,7 +298,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             } else {
                 intro = false;
                 narrativeProgressBar.setValue(0);
-                mainLoop.setDelay(1);
+                mainLoop.setDelay(50);
                 setLevel(1);
                 return;
             }
@@ -290,14 +306,25 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         
         // Main game loop
         if (narrativeProgressBar.getValue() == 1) {
+            System.out.println("[Fallout76] TODO: Add CreditCardPaymentDialog");
             currentQuest = QuestList.fetchQuest();
             this.narrativeField.setText(NarrativeDust.motivationGenerator() + currentQuest);
         } else if (narrativeProgressBar.getValue() == 10) {
             this.narrativeField.setText("Monsters surround you as you begin your quest. You must fight to survive");
             for (int i = 0; i < 12; i++) {
                 if (johnCheckbox.isSelected()) {
-                    if (i == 0) mobList.addElement("THE REAL John O'Connor");
-                    mobList.addElement("John O'Connor");
+                    if (i == 0) {
+                        mobList.addElement("THE REAL John O'Connor");
+                    } else {
+                        mobList.addElement("John O'Connor");
+                    }
+                } else if (dlcCheckbox.isSelected()) {
+                    if (currentJohnRepo == null) {
+                        currentJohnRepo = johnRepos.get(0);
+                    } else {
+                        currentJohnRepo = findNextRepoMob(currentJohnRepo);
+                    }
+                    mobList.addElement(currentJohnRepo);
                 } else {
                     System.out.println(currentQuest);
                     mobList.addElement(KillingList.generateMonster(currentQuest));
@@ -316,7 +343,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 mobList.remove(0);
                 killingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 5);
-                inventoryList.addElement(item.dropItem());
+                inventoryList.insertElementAt(item.dropItem(), random.nextInt(inventoryList.size() + 1));
                 inventoryListView.ensureIndexIsVisible(inventoryList.size() - 1);
                 return;
             }
@@ -334,8 +361,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 sellingProgressBar.setValue(sellingProgressBar.getValue() + 1);
                 return;
             } else {
-                inventoryList.removeElementAt(currentItemIndex);
-                inventoryList.addElement("One Gold");
+                String currentItem = (String)inventoryList.get(currentItemIndex);
+                inventoryList.remove(currentItemIndex);
+                for (int i = 0; i < ItemList.dropPrice(currentItem); i++) {
+                    inventoryList.add(random.nextInt(inventoryList.size()), "One Gold");
+                }
                 sellingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
                 return;
@@ -357,17 +387,60 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         equipmentList.addElement(Equipment.levelUp(level));
     }
     
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+    /* Uses binary search to find the next repo to fight */
+    private String findNextRepoMob(String previous) {
+        int odd = johnRepos.size() % 2;
+        List<String> left = johnRepos.subList(0, (johnRepos.size() / 2) + odd);
+        List<String> right = johnRepos.subList((johnRepos.size() / 2) + odd, johnRepos.size());
+        while (true) {
+            List<String> tmp;
+            int comparison = previous.compareTo(left.get(left.size() - 1));
+            if (comparison > 0) {
+                tmp = right;
+                odd = tmp.size() % 2;
+                left = tmp.subList(0, (tmp.size() / 2) + odd);
+                right = tmp.subList((tmp.size() / 2) + odd, tmp.size());
+            } else if (comparison < 0) {
+                tmp = left;
+                odd = tmp.size() % 2;
+                left = tmp.subList(0, (tmp.size() / 2) + odd);
+                right = tmp.subList((tmp.size() / 2) + odd, tmp.size());
+            } else {
+                return right.get(0);
+            }
+            
+            if (right.size() == 1) {
+                return right.get(0);
+            }
+        }
+    }
+    
+    private void dlcCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dlcCheckboxActionPerformed
+        if (dlcCheckbox.isSelected() && johnRepos.size() == 0) {
+            System.out.println("[Fallout76] Loading DLC content...");
+            try {
+                int page = 1;
+                while (true) {
+                    JSONArray response = Unirest.get("https://api.github.com/users/sax1johno/repos")
+                            .basicAuth("joshgarde", "e5b49807a952a70371a7969ef2bb4091f0067257")
+                            .queryString("page", page)
+                            .asJson().getBody().getArray();
+                    if (response.isEmpty()) break;
+                    for (Iterator i = response.iterator(); i.hasNext();) {
+                        johnRepos.add(((JSONObject)i.next()).getString("full_name"));
+                    }
+                    page++;
+                }
+            } catch (Exception e) {
+                System.out.println("[Fallout76] Error fetching John's Repos: " + e.getMessage());
+            }
+            System.out.println("[Fallout76] DLC Loaded!");
+        }
+    }//GEN-LAST:event_dlcCheckboxActionPerformed
 
     private void johnCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_johnCheckboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_johnCheckboxActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sortMobListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortMobListButtonActionPerformed
         boolean sorted;
@@ -388,6 +461,26 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_inventoryListViewComponentAdded
 
+    private void hdRemixCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hdRemixCheckboxActionPerformed
+        if (hdRemixCheckbox.isSelected()) {
+            for (Component c : getContentPane().getComponents()) {
+                Font font = c.getFont();
+                Font hdFont = new Font(font.getName(), font.getStyle(), font.getSize() * 2);
+                c.setFont(hdFont);
+            }
+            this.setSize(this.getSize().width * 2, this.getSize().height * 2);
+            mediaPlayer.playMedia("hd-remix.mp3");
+        } else {
+            for (Component c : getContentPane().getComponents()) {
+                Font hdFont = c.getFont();
+                Font font = new Font(hdFont.getName(), hdFont.getStyle(), hdFont.getSize() / 2);
+                c.setFont(font);
+            }
+            this.setSize(this.getSize().width / 2, this.getSize().height / 2);
+            mediaPlayer.stop();
+        }
+    }//GEN-LAST:event_hdRemixCheckboxActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -428,10 +521,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> characterSheetList;
+    private javax.swing.JCheckBox dlcCheckbox;
+    private javax.swing.JCheckBox hdRemixCheckbox;
     private javax.swing.JList<String> inventoryListView;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

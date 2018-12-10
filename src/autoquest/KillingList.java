@@ -348,7 +348,7 @@ public class KillingList {
             return (goToViridianCityGym.get(n));
         }if (location == "Go To Apple Store")
         {
-            ArrayList<String> goToTheAppleStore = monster.get("Go To The Apple Store");
+            ArrayList<String> goToTheAppleStore = monster.get("Go To Apple Store");
             int n = rand.nextInt(goToTheAppleStore.size());
             return (goToTheAppleStore.get(n));
         }if (location == "Go To Java Class")

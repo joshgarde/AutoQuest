@@ -18,7 +18,6 @@ import java.util.Set;
 public class ItemList {
     private static final Map<String, Integer> itemList = createMap();
     private String drop;
-    private Integer price;
     
     private static Map<String, Integer> createMap() {
         Map<String, Integer> itemList = new HashMap<>();
@@ -97,16 +96,17 @@ public class ItemList {
         return itemList;
     }
     
-    public String dropItem() {
+    public static String dropItem() {
         Random rand = new Random();
         
         ArrayList<String> items = new ArrayList<String>(itemList.keySet());
         return items.get(rand.nextInt(items.size()));
     }
     
-    public Integer dropPrice(String itemDropped) {
+    public static Integer dropPrice(String itemDropped) {
         Random rand = new Random();
         Integer bitcoinValue = rand.nextInt(10000);
+        int price;
         
         if (itemDropped.equals("BitCoin"))
             price = bitcoinValue;

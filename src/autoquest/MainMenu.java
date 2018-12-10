@@ -20,6 +20,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javax.swing.JPanel;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 
 /**
@@ -88,6 +91,8 @@ public class MainMenu extends javax.swing.JFrame {
         "Brett",
         "Colin"
     };
+    
+    private EmbeddedMediaPlayer mediaPlayer;
 
     /**
      * Creates new form MainMenu
@@ -654,19 +659,23 @@ public class MainMenu extends javax.swing.JFrame {
             p.setLayout(new BorderLayout());
             p.add(c, BorderLayout.CENTER);
             introFrame.add(p, BorderLayout.CENTER);
-            EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+            mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
             mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(c));
+            setVisible(false);
             introFrame.setVisible(true);
-            
             mediaPlayer.playMedia("intro.mp4");
             introFrame.setExtendedState( introFrame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
             
-            
-
-            /*MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow();
             mainWindow.setCharacterSheet(sheet);
-            mainWindow.setVisible(true);
-            setVisible(false);*/
+            mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+                @Override
+                public void finished(uk.co.caprica.vlcj.player.MediaPlayer mediaPlayer) {
+                    System.out.println("[Fallout76] Intro finished");
+                    introFrame.setVisible(false);
+                    mainWindow.setVisible(true);
+                }
+            });
         }
     }//GEN-LAST:event_playButtonActionPerformed
 
