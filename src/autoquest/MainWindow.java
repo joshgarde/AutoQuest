@@ -12,16 +12,24 @@ import javax.swing.Timer;
 import autoquest.NarrativeDust;
 import com.mashape.unirest.http.Unirest;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  *
@@ -45,6 +53,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private int currentItemIndex;
     private HeadlessMediaPlayer mediaPlayer;
     private ArrayList<String> johnRepos = new ArrayList<String>();
+    private ArrayList<String> johnSentences = new ArrayList<String>();
     
     /**
      * Creates new form MainWindow
@@ -96,6 +105,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         hdRemixCheckbox = new javax.swing.JCheckBox();
         sortMobListButton = new javax.swing.JButton();
         sellingProgressBar = new javax.swing.JProgressBar();
+        preorderBonusCheckbox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fallout 76");
@@ -122,7 +132,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         nameLabel.setText("Name");
 
         narrativeField.setEditable(false);
-        narrativeField.setFont(new java.awt.Font("Papyrus", 0, 14)); // NOI18N
+        narrativeField.setFont(new java.awt.Font("Papyrus", 0, 18)); // NOI18N
         jScrollPane3.setViewportView(narrativeField);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -170,6 +180,13 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        preorderBonusCheckbox.setText("Pre-order bonus");
+        preorderBonusCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                preorderBonusCheckboxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,7 +222,8 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                             .addComponent(johnCheckbox)
                                             .addComponent(hdRemixCheckbox)
                                             .addComponent(jLabel7)
-                                            .addComponent(dlcCheckbox)))
+                                            .addComponent(dlcCheckbox)
+                                            .addComponent(preorderBonusCheckbox)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,6 +276,8 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(dlcCheckbox)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(preorderBonusCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(johnCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -326,7 +346,6 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                     }
                     mobList.addElement(currentJohnRepo);
                 } else {
-                    System.out.println(currentQuest);
                     mobList.addElement(KillingList.generateMonster(currentQuest));
                 }
             }
@@ -334,7 +353,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         } else if (narrativeProgressBar.getValue() >= 15 && narrativeProgressBar.getValue() < 75) {
             if (killingProgressBar.getValue() == 0) {
                 currentMob = (String)mobList.get(0);
-                narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
+                if (preorderBonusCheckbox.isSelected()) {
+                    narrativeField.setText("Now battling " + currentMob + ". " + johnSentences.get(random.nextInt(johnSentences.size())));
+                } else {
+                    narrativeField.setText("Now battling " + currentMob + ". " + NarrativeDust.difficultyGenerator());
+                }
             }
             if (killingProgressBar.getValue() != 100) {
                 killingProgressBar.setValue(killingProgressBar.getValue() + 1);
@@ -354,7 +377,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                     currentItemIndex = random.nextInt(inventoryList.size());
                     item = (String)inventoryList.get(currentItemIndex);
                 } while (item.equals("One Gold"));
-                narrativeField.setText("Now selling a " + item);
+                narrativeField.setText("Now selling a " + item + ". " + johnSentences.get(random.nextInt(johnSentences.size())));
                 inventoryListView.ensureIndexIsVisible(currentItemIndex);
             }
             if (sellingProgressBar.getValue() != 100) {
@@ -363,9 +386,9 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             } else {
                 String currentItem = (String)inventoryList.get(currentItemIndex);
                 inventoryList.remove(currentItemIndex);
-                for (int i = 0; i < ItemList.dropPrice(currentItem); i++) {
-                    inventoryList.add(random.nextInt(inventoryList.size()), "One Gold");
-                }
+                //for (int i = 0; i < ItemList.dropPrice(currentItem); i++) { // Inventory gets too crazy for this
+                inventoryList.add(random.nextInt(inventoryList.size()), "One Gold");
+                //}
                 sellingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
                 return;
@@ -416,7 +439,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     }
     
     private void dlcCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dlcCheckboxActionPerformed
-        if (dlcCheckbox.isSelected() && johnRepos.size() == 0) {
+        if (dlcCheckbox.isSelected() && johnRepos.isEmpty()) {
             System.out.println("[Fallout76] Loading DLC content...");
             try {
                 int page = 1;
@@ -432,7 +455,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                     page++;
                 }
             } catch (Exception e) {
-                System.out.println("[Fallout76] Error fetching John's Repos: " + e.getMessage());
+                System.out.println("[Fallout76] Server disconnected: " + e.getMessage());
             }
             System.out.println("[Fallout76] DLC Loaded!");
         }
@@ -462,16 +485,17 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_inventoryListViewComponentAdded
 
     private void hdRemixCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hdRemixCheckboxActionPerformed
+        List<Component> components = getAllComponents(this.getRootPane());
         if (hdRemixCheckbox.isSelected()) {
-            for (Component c : getContentPane().getComponents()) {
+            for (Component c : components) {
                 Font font = c.getFont();
                 Font hdFont = new Font(font.getName(), font.getStyle(), font.getSize() * 2);
                 c.setFont(hdFont);
             }
             this.setSize(this.getSize().width * 2, this.getSize().height * 2);
-            mediaPlayer.playMedia("hd-remix.mp3");
+            mediaPlayer.playMedia("hd-remix-remix.mp3");
         } else {
-            for (Component c : getContentPane().getComponents()) {
+            for (Component c : components) {
                 Font hdFont = c.getFont();
                 Font font = new Font(hdFont.getName(), hdFont.getStyle(), hdFont.getSize() / 2);
                 c.setFont(font);
@@ -480,6 +504,54 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
             mediaPlayer.stop();
         }
     }//GEN-LAST:event_hdRemixCheckboxActionPerformed
+
+    private List<Component> getAllComponents(Container c) {
+        ArrayList<Component> components = new ArrayList<Component>();
+        Component[] comps = c.getComponents();
+        for (Component comp : comps) {
+            if (comp instanceof Container)
+                components.addAll(getAllComponents((Container)comp));
+            components.add(comp);
+        }
+        return components;
+    }
+    
+    private void preorderBonusCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preorderBonusCheckboxActionPerformed
+        if (preorderBonusCheckbox.isSelected() && johnSentences.isEmpty()) {
+            System.out.println("[Fallout76] Loading Preorder Bonus...");
+            
+            // Fetch Publications
+            try {
+                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+                
+                InputSource rss = new InputSource(new StringReader(Unirest.get("https://medium.com/feed/@sax1johno").asString().getBody()));
+                Document doc = docBuilder.parse(rss);
+                NodeList posts = doc.getElementsByTagName("item");
+                
+                for (int i = 0; i < posts.getLength(); i++) {
+                    NodeList post = posts.item(i).getChildNodes();
+                    for (int j = 0; j < post.getLength(); j++) {
+                        if (post.item(j).getNodeName().equals("content:encoded")) {
+                            String content = post.item(j).getTextContent();
+                            content = content
+                                    .replace("<p>", "")
+                                    .replaceAll("<\\/.*?><.*?>", "\\. ")
+                                    .replace("</p>", "")
+                                    .replaceAll("<[^>]*>", "")
+                                    .replaceAll("\\. \\. ", "\\. ");
+                            johnSentences.addAll(Arrays.asList(content.split("\\. ")));
+                            break;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("[Fallout76] Server disconnected: " + e.getMessage());
+            }
+            
+            System.out.println("[Fallout76] Loaded Preorder Bonus!");
+        } 
+    }//GEN-LAST:event_preorderBonusCheckboxActionPerformed
     
     /**
      * @param args the command line arguments
@@ -543,6 +615,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextPane narrativeField;
     private javax.swing.JProgressBar narrativeProgressBar;
+    private javax.swing.JCheckBox preorderBonusCheckbox;
     private javax.swing.JProgressBar sellingProgressBar;
     private javax.swing.JButton sortMobListButton;
     // End of variables declaration//GEN-END:variables
