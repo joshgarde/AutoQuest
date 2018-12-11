@@ -332,13 +332,7 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
         } else if (narrativeProgressBar.getValue() == 10) {
             this.narrativeField.setText("Monsters surround you as you begin your quest. You must fight to survive");
             for (int i = 0; i < 12; i++) {
-                if (johnCheckbox.isSelected()) {
-                    if (i == 0) {
-                        mobList.addElement("THE REAL John O'Connor");
-                    } else {
-                        mobList.addElement("John O'Connor");
-                    }
-                } else if (dlcCheckbox.isSelected()) {
+                if (dlcCheckbox.isSelected()) {
                     if (currentJohnRepo == null) {
                         currentJohnRepo = johnRepos.get(0);
                     } else {
@@ -376,8 +370,12 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 do {
                     currentItemIndex = random.nextInt(inventoryList.size());
                     item = (String)inventoryList.get(currentItemIndex);
-                } while (item.equals("One Gold"));
-                narrativeField.setText("Now selling a " + item + ". " + johnSentences.get(random.nextInt(johnSentences.size())));
+                } while (item.equals("One Gold") || item.equals("One JohnBuck®"));
+                if (preorderBonusCheckbox.isSelected()) {
+                    narrativeField.setText("Now selling a " + item + ". " + johnSentences.get(random.nextInt(johnSentences.size())));
+                } else {
+                    narrativeField.setText("Now selling a " + item + ".");
+                }
                 inventoryListView.ensureIndexIsVisible(currentItemIndex);
             }
             if (sellingProgressBar.getValue() != 100) {
@@ -387,7 +385,11 @@ public class MainWindow extends javax.swing.JFrame implements ActionListener {
                 String currentItem = (String)inventoryList.get(currentItemIndex);
                 inventoryList.remove(currentItemIndex);
                 //for (int i = 0; i < ItemList.dropPrice(currentItem); i++) { // Inventory gets too crazy for this
-                inventoryList.add(random.nextInt(inventoryList.size()), "One Gold");
+                if (johnCheckbox.isSelected()) {
+                    inventoryList.add(random.nextInt(inventoryList.size()), "One JohnBuck®");
+                } else {
+                    inventoryList.add(random.nextInt(inventoryList.size()), "One Gold");
+                }
                 //}
                 sellingProgressBar.setValue(0);
                 narrativeProgressBar.setValue(narrativeProgressBar.getValue() + 1);
